@@ -45,13 +45,23 @@
 /* The sample content handler */
 static int example_handler(request_rec *r)
 {
+    apr_table_t *GET;
+
     if (strcmp(r->handler, "example")) {
         return DECLINED;
     }
-    r->content_type = "text/html";      
+
+    /* Parse the GET and, optionally, the POST data sent to us */ 
+    ap_args_to_table(r, &GET);
+
+    r->content_type = "text/html";
+
+    /* Get the "q" key from the query string, if any. */
+    const char *query = apr_table_get(GET, "q");
+    if (!query) query = "Not Found";
 
     if (!r->header_only)
-        ap_rputs("Hellow World!\n", r);
+        ap_rprintf(r, "%s \n", query);
     return OK;
 }
 
