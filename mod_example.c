@@ -51,7 +51,7 @@ static int example_handler(request_rec *r)
     r->content_type = "text/html";      
 
     if (!r->header_only)
-        ap_rputs("The sample page from mod_example.c\n", r);
+        ap_rputs("Hellow World!\n", r);
     return OK;
 }
 
