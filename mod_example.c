@@ -57,6 +57,19 @@ typedef struct {
 
 static example_config config;
 
+/*
+ *  ==============================================================================
+ *   Our directive handlers:
+ *  ==============================================================================
+ */
+/* Handler for the "exampleEnabled" directive */
+const char *example_set_enabled(cmd_parms *cmd, void *cfg, const char *arg)
+{
+    if(!strcasecmp(arg, "on")) config.enabled = 1;
+    else config.enabled = 0;
+    return NULL;
+}
+
 /* Handler for the "examplePath" directive */
 const char *example_set_path(cmd_parms *cmd, void *cfg, const char *arg)
 {
