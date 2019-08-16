@@ -113,7 +113,7 @@ static const command_rec        example_directives[] =
  */
 static int example_handler(request_rec *r)
 {
-    if(!r->handler || strcmp(r->handler, "example-handler")) return(DECLINED);
+    if(!r->handler || strcmp(r->handler, "example")) return(DECLINED);
     ap_set_content_type(r, "text/plain");
     ap_rprintf(r, "Enabled: %u\n", config.enabled);
     ap_rprintf(r, "Path: %s\n", config.path);
