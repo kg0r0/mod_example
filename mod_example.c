@@ -51,8 +51,8 @@
 /*
  *  ==============================================================================
  *   Our configuration prototype and declaration:
- *    ==============================================================================
- *     */
+ *  ==============================================================================
+ */
 typedef struct {
     int         enabled;      /* Enable or disable our module */
     const char *path;         /* Some path to...something */
@@ -64,8 +64,8 @@ static example_config config;
 /*
  *  ==============================================================================
  *   Our directive handlers:
- *    ==============================================================================
- *     */
+ *  ==============================================================================
+ */
 /* Handler for the "exampleEnabled" directive */
 const char *example_set_enabled(cmd_parms *cmd, void *cfg, const char *arg)
 {
@@ -97,8 +97,8 @@ const char *example_set_action(cmd_parms *cmd, void *cfg, const char *arg1, cons
 /*
  *  ==============================================================================
  *   The directive structure for our name tag:
- *    ==============================================================================
- *     */
+ *  ==============================================================================
+ */
 static const command_rec        example_directives[] =
 {
     AP_INIT_TAKE1("exampleEnabled", example_set_enabled, NULL, RSRC_CONF, "Enable or disable mod_example"),
@@ -109,8 +109,8 @@ static const command_rec        example_directives[] =
 /*
  *  ==============================================================================
  *   Our module handler:
- *    ==============================================================================
- *     */
+ *  ==============================================================================
+ */
 static int example_handler(request_rec *r)
 {
     if(!r->handler || strcmp(r->handler, "example-handler")) return(DECLINED);
@@ -124,8 +124,8 @@ static int example_handler(request_rec *r)
 /*
  *  ==============================================================================
  *   The hook registration function (also initializes the default config values):
- *    ==============================================================================
- *     */
+ *  ==============================================================================
+ */
 static void register_hooks(apr_pool_t *pool) 
 {
     config.enabled = 1;
@@ -136,8 +136,8 @@ static void register_hooks(apr_pool_t *pool)
 /*
  *  ==============================================================================
  *   Our module name tag:
- *    ==============================================================================
- *     */
+ *  ==============================================================================
+ */
 module AP_MODULE_DECLARE_DATA   example_module =
 {
     STANDARD20_MODULE_STUFF,
