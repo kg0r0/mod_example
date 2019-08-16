@@ -13,6 +13,10 @@
 **
 **    #   httpd.conf
 **    LoadModule example_module modules/mod_example.so
+**
+**    ExampleEnabled On
+**    ExamplePath "/usr/bin/foo"
+**    ExampleAction file allow
 **    <Location /example>
 **    SetHandler example
 **    </Location>
