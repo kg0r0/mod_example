@@ -48,7 +48,11 @@
 #include "http_protocol.h"
 #include "http_request.h"
 
-/* Our configuration prototype and declaration: */
+/*
+ *  ==============================================================================
+ *   Our configuration prototype and declaration:
+ *    ==============================================================================
+ *     */
 typedef struct {
     int         enabled;      /* Enable or disable our module */
     const char *path;         /* Some path to...something */
@@ -60,8 +64,8 @@ static example_config config;
 /*
  *  ==============================================================================
  *   Our directive handlers:
- *  ==============================================================================
- */
+ *    ==============================================================================
+ *     */
 /* Handler for the "exampleEnabled" directive */
 const char *example_set_enabled(cmd_parms *cmd, void *cfg, const char *arg)
 {
@@ -90,7 +94,11 @@ const char *example_set_action(cmd_parms *cmd, void *cfg, const char *arg1, cons
     return NULL;
 }
 
-/* The directive structure for our name tag: */
+/*
+ *  ==============================================================================
+ *   The directive structure for our name tag:
+ *    ==============================================================================
+ *     */
 static const command_rec        example_directives[] =
 {
     AP_INIT_TAKE1("exampleEnabled", example_set_enabled, NULL, RSRC_CONF, "Enable or disable mod_example"),
@@ -98,11 +106,14 @@ static const command_rec        example_directives[] =
     AP_INIT_TAKE2("exampleAction", example_set_action, NULL, RSRC_CONF, "Special action value!"),
     { NULL }
 };
-
-/* The sample content handler */
+/*
+ *  ==============================================================================
+ *   Our module handler:
+ *    ==============================================================================
+ *     */
 static int example_handler(request_rec *r)
 {
-    if(!r->handler || strcmp(r->handler, "example")) return(DECLINED);
+    if(!r->handler || strcmp(r->handler, "example-handler")) return(DECLINED);
     ap_set_content_type(r, "text/plain");
     ap_rprintf(r, "Enabled: %u\n", config.enabled);
     ap_rprintf(r, "Path: %s\n", config.path);
@@ -113,29 +124,27 @@ static int example_handler(request_rec *r)
 /*
  *  ==============================================================================
  *   The hook registration function (also initializes the default config values):
- *  ==============================================================================
- */
-static void example_register_hooks(apr_pool_t *p)
+ *    ==============================================================================
+ *     */
+static void register_hooks(apr_pool_t *pool) 
 {
     config.enabled = 1;
     config.path = "/foo/bar";
     config.typeOfAction = 3;
     ap_hook_handler(example_handler, NULL, NULL, APR_HOOK_LAST);
 }
-
 /*
  *  ==============================================================================
  *   Our module name tag:
- *  ==============================================================================
- */
-module AP_MODULE_DECLARE_DATA example_module = {
-    STANDARD20_MODULE_STUFF, 
-    NULL,                  /* create per-dir    config structures */
-    NULL,                  /* merge  per-dir    config structures */
-    NULL,                  /* create per-server config structures */
-    NULL,                  /* merge  per-server config structures */
-    NULL,                  /* table of config file commands       */
-    example_directives,    /* Any directives we may have for httpd */
-    example_register_hooks  /* register hooks                      */
+ *    ==============================================================================
+ *     */
+module AP_MODULE_DECLARE_DATA   example_module =
+{
+    STANDARD20_MODULE_STUFF,
+    NULL,               /* Per-directory configuration handler */
+    NULL,               /* Merge handler for per-directory configurations */
+    NULL,               /* Per-server configuration handler */
+    NULL,               /* Merge handler for per-server configurations */
+    example_directives, /* Any directives we may have for httpd */
+    register_hooks      /* Our hook registering function */
 };
-
