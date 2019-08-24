@@ -24,14 +24,3 @@ you immediately can request the URL /example and watch for the output of this mo
 # yum install -y lynx
 # lynx -mime_header http://localhost/example
 ```
-The output should be similar to the following one:
-```
-HTTP/1.1 200 OK
-Date: Mon, 12 Aug 2019 08:51:49 GMT
-Server: Apache/2.4.6 (CentOS)
-Content-Length: 35
-Connection: close
-Content-Type: text/html; charset=UTF-8
-
-The sample page from mod_example.c
-```
